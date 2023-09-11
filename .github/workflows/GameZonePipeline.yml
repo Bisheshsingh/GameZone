@@ -21,7 +21,7 @@ jobs:
          run: gradle init
          
        - name: Run Gradle Build
-         run: gradle build
+         run: gradl build
          
   Packaging:
     needs: Build 
