@@ -6,8 +6,8 @@ import com.example.games.Models.Coordinate2D;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class TicTacToeCell extends Cell<Coordinate2D, Enums.TicTacToeCharacters> {
-    public TicTacToeCell(final Coordinate2D key, final Enums.TicTacToeCharacters value) {
-        super(key, value);
+public class TicTacToeCell extends Cell<Enums.TicTacToeCharacters> {
+    public TicTacToeCell(final Enums.TicTacToeCharacters value) {
+        super(value);
     }
 }

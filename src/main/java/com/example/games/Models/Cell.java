@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class Cell<K,V> {
-    protected K key;
+public abstract class Cell<V> {
     protected V value;
 }

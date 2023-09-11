@@ -18,8 +18,7 @@ public class TicTacToeBoard extends Board2D<TicTacToeCharacters, TicTacToeCell, 
     private void initialize(final Enums.TicTacToeCharacters value) {
         for (int i = 0; i < getRows(); i++) {
             for (int j = 0; j < getColumns(); j++) {
-                final Coordinate2D coordinates = new Coordinate2D(i, j);
-                final TicTacToeCell cell = new TicTacToeCell(coordinates, value);
+                final TicTacToeCell cell = new TicTacToeCell(value);
                 this.rawBoard.get(i).set(j, cell);
             }
         }

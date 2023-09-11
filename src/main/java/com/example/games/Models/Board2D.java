@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Data
-public abstract class Board2D<T, U extends Cell<Coordinate2D, T>, V extends BiDirectionMove<T>> implements Board<V> {
+public abstract class Board2D<T, U extends Cell<T>, V extends BiDirectionMove<T>> implements Board<V> {
     protected List<List<U>> rawBoard;
     private final Integer rows;
     private final Integer columns;
@@ -19,10 +19,7 @@ public abstract class Board2D<T, U extends Cell<Coordinate2D, T>, V extends BiDi
         final List<List<U>> list = new ArrayList<>();
 
         for (int i = 0; i < rows; i++) {
-            list.add(new ArrayList<>(
-                            Collections.nCopies(columns, null)
-                    )
-            );
+            list.add(new ArrayList<>(Collections.nCopies(columns, null)));
         }
 
         return list;
