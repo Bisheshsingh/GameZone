@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TicTacToeMenu</title>
+     <!--CSS-->
+    <style th:inline="css">
+        body {
+            background-image: url([[@{/Others/TicTacToe/bg1.jpg}]]);
+            background-size: cover;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/CSS/TicTacToe/TicTacToe.css}">
+</head>
+<body>
+
+<div align="center">
+    <img src="https://images.cooltext.com/5670479.png" alt="tictactoe"><br>
+    <button class="neonButton" th:onclick="redirectToPage('/tictactoe/vsplayer')">VS Player</button>
+</div>
+
+</body>
+
+<!-- JS -->
+<script th:inline="javascript" th:src="@{/Script/TicTacToe/TicTacToe.js}" type="text/javascript"></script>
+
+</html>

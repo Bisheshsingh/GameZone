@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TicTacToeGame</title>
+
+    <!--CSS-->
+    <style th:inline="css">
+        body {
+            background-image: url([[@{/Others/TicTacToe/bg1.jpg}]]);
+            background-size: cover;
+        }
+    </style>
+    <link th:href="@{/CSS/TicTacToe/TicTacToe.css}" rel="stylesheet">
+    <link th:href="@{/webjars/bootstrap/5.3.1/css/bootstrap.min.css}" rel="stylesheet"/>
+    <script th:src="@{/webjars/bootstrap/5.3.1/js/bootstrap.bundle.min.js}" defer></script>
+    <script th:src="@{/webjars/htmx.org/1.9.4/dist/htmx.min.js}" defer></script>
+</head>
+
+<body>
+<div id="board" class="board">
+    <div class="rowCarrier" th:each="currentRow:${board.rawBoard}">
+        <div align="center" th:each="currentElement:${currentRow}">
+            <a th:class="${#strings.equals(currentElement.value.character,
+                                          defaultCharacter.character)} ? neonBlock : neonBlockD"
+               th:hx-get="'/tictactoe/updateBoard/'
+               + ${currentRowStat.index} + '/'
+               + ${currentElementStat.index}"
+               hx-swap="outerHTML"
+               hx-target="#board">
+                <p class="blockText"
+                   th:text="${currentElement.value.character}"></p>
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- JS -->
+<script th:inline="javascript" th:src="@{/Script/TicTacToe/TicTacToe.js}" type="text/javascript"></script>
+
+</html>
