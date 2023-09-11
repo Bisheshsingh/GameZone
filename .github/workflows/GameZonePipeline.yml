@@ -21,7 +21,7 @@ jobs:
          run: gradle init
          
        - name: Run Gradle Build
-         run: gradl build
+         run: gradle build
          
   Packaging:
     needs: Build 
@@ -29,6 +29,9 @@ jobs:
     steps:
         - name: Setup Docker
           uses: docker/setup-qemu-action@v2.2.0
+          
+        - name: Create an Image
+          run: docker build -t hellozed:v1 .
     
     
     
