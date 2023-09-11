@@ -30,17 +30,11 @@ jobs:
         - name: Setup Docker
           uses: docker/setup-qemu-action@v2.2.0
 
-        - name: Printing Current Directory
-          run: pwd
-
-        - name: Printing All Directory
-          run: ls -R
-
-        - name: Printing Root
-          run: cd .. & ls
+        - name: Changing Directory
+          uses: ./
           
         - name: Create an Image
-          run: docker build -t hellozed:v1 .
+          run: docker build -t gamezone:gamezone .
     
     
     
