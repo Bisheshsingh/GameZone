@@ -29,6 +29,12 @@ jobs:
     steps:
         - name: Setup Docker
           uses: docker/setup-qemu-action@v2.2.0
+
+        - name: Printing Current Directory
+          run: pwd
+
+        - name: Printing All Directory
+          run: ls
           
         - name: Create an Image
           run: docker build -t hellozed:v1 .
