@@ -34,7 +34,10 @@ jobs:
           run: pwd
 
         - name: Printing All Directory
-          run: ls
+          run: ls -R
+
+        - name: Printing Root
+          run: cd .. & ls
           
         - name: Create an Image
           run: docker build -t hellozed:v1 .
