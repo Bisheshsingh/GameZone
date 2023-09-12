@@ -20,9 +20,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-       - name: Print
-         run: ls
-         
        - name: Run Gradle Build
          run: gradle build
 
@@ -43,8 +40,10 @@ jobs:
           uses: actions/download-artifact@v2.1.1
           with:
            name: GameZone-${{ github.sha }}.jar
-           path: '.'
-    
+
+        - name: Print
+          run: ls
+      
         - name: Setup Docker
           uses: docker/setup-qemu-action@v2.2.0
           
