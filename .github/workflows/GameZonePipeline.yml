@@ -43,7 +43,7 @@ jobs:
           uses: actions/download-artifact@v2.1.1
           with:
            name: GameZone-${{ github.sha }}.jar
-           path: ./target/GameZone.jar
+           path: '.'
     
         - name: Setup Docker
           uses: docker/setup-qemu-action@v2.2.0
