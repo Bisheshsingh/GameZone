@@ -1,0 +1,46 @@
+name: Pipeline
+
+on:
+  push:
+    branches: [ "mainline" ]
+  pull_request:
+    branches: [ "mainline" ]
+  workflow_dispatch:
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+       - name: Setup Java JDK
+         uses: actions/setup-java@v3.12.0
+         with:
+          java-version: '17'
+          distribution: 'temurin'
+
+       - name: Initializing Gradle
+         run: gradle init
+         
+       - name: Run Gradle Build
+         run: gradle build
+         
+  Packaging:
+    needs: Build 
+    runs-on: ubuntu-latest
+    steps:
+        - name: Getting Project
+          uses: actions/checkout@v4.0.0
+    
+        - name: Setup Docker
+          uses: docker/setup-qemu-action@v2.2.0
+
+        - name: Print
+          working-directory: '.'
+          run: pwd
+
+        - name: Print LS
+          working-directory: '.'
+          run: ls
+          
+        - name: Create an Image
+          working-directory: '.'
+          run: docker build -t gamezone:gamezone .
