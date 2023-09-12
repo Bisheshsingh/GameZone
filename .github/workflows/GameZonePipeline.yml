@@ -19,9 +19,12 @@ jobs:
          with:
           java-version: '17'
           distribution: 'temurin'
+
+       - name: Print
+         run: ls
          
        - name: Run Gradle Build
-         run: sudo ./gradlew build
+         run: gradle build
          
   Packaging:
     needs: Build 
