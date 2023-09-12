@@ -43,14 +43,14 @@ jobs:
            path: GameZone-${{ github.sha }}.jar
 
         - name: Create Dockerfile
-          run: echo "FROM openjdk:latest
-                     VOLUME /tmp
-                     COPY *.jar app.jar
-                     EXPOSE 8080
-                     ENTRYPOINT ["java","-jar","/app.jar"]" | tee Dockerfile
+          run: echo FROM openjdk:latest\n
+                     VOLUME /tmp \n
+                     COPY *.jar app.jar \n
+                     EXPOSE 8080 \n 
+                     ENTRYPOINT ["java","-jar","/app.jar"] | tee Dockerfile
 
         - name: Print
-          run: ls
+          run: cat Dockerfile
       
         - name: Setup Docker
           uses: docker/setup-qemu-action@v2.2.0
