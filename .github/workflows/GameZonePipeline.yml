@@ -27,17 +27,20 @@ jobs:
     needs: Build 
     runs-on: ubuntu-latest
     steps:
+        - name: Getting Project
+          uses: actions/checkout@v4.0.0
+    
         - name: Setup Docker
           uses: docker/setup-qemu-action@v2.2.0
 
-        - name: Printing Current Directory
+        - name: Print
+          working-directory: '.'
           run: pwd
 
-        - name: Printing All Directory
+        - name: Print LS
+          working-directory: '.'
           run: ls
           
         - name: Create an Image
-          run: docker build -t hellozed:v1 .
-    
-    
-    
+          working-directory: '.'
+          run: docker build -t gamezone:gamezone .
