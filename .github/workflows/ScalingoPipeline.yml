@@ -2,9 +2,9 @@ name: ScalingoPipeline
 
 on:
   push:
-    branches: [ "scalingo" ]
+    branches: [ "mainline" ]
   pull_request:
-    branches: [ "scalingo" ]
+    branches: [ "mainline" ]
   workflow_dispatch:
 
 jobs:
@@ -41,4 +41,4 @@ jobs:
 
       - name: Running The Application
         working-directory: "./build/libs"
-        run: ls
+        run: java -jar GameZone-0.0.1-SNAPSHOT.jar
