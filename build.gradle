@@ -41,5 +41,5 @@ tasks.named('test') {
 }
 
 bootJar {
-    destinationDirectory.set(file("$rootDir/target"))
+    destinationDirectory.set(file("$rootDir/build/libs"))
 }
