@@ -11,36 +11,54 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
+       - name: Getting Project
+         uses: actions/checkout@v4.0.0
+          
        - name: Setup Java JDK
          uses: actions/setup-java@v3.12.0
          with:
           java-version: '17'
           distribution: 'temurin'
 
-       - name: Initializing Gradle
-         run: gradle init
-         
        - name: Run Gradle Build
          run: gradle build
+
+       - name: Rename the Jar
+         run: cp target/GameZone-0.0.1-SNAPSHOT.jar GameZone-${{ github.sha }}.jar
+
+       - name: Save the jar
+         uses: actions/upload-artifact@v3.1.3
+         with:
+           name: GameZone-${{ github.sha }}
+           path: GameZone-${{ github.sha }}.jar
          
   Packaging:
     needs: Build 
     runs-on: ubuntu-latest
     steps:
-        - name: Getting Project
-          uses: actions/checkout@v4.0.0
-    
-        - name: Setup Docker
-          uses: docker/setup-qemu-action@v2.2.0
+        - name: Download a Build Artifact
+          uses: actions/download-artifact@v2.1.1
+          with:
+           name: GameZone-${{ github.sha }}
+           path: GameZone-${{ github.sha }}.jar
+
+        - name: Create Dockerfile
+          run: echo -e "FROM openjdk:latest\n
+                     VOLUME /tmp \n
+                     COPY *.jar app.jar \n
+                     EXPOSE 8080 \n 
+                     ENTRYPOINT ["java","-jar","/app.jar"]" | tee Dockerfile
 
         - name: Print
-          working-directory: '.'
-          run: pwd
-
-        - name: Print LS
-          working-directory: '.'
-          run: ls
+          run: cat Dockerfile
+      
+        - name: Setup Docker
+          uses: docker/setup-qemu-action@v2.2.0
           
         - name: Create an Image
-          working-directory: '.'
           run: docker build -t gamezone:gamezone .
+
+        - name: Save Image
+          uses: ishworkh/container-image-artifact-upload@v1.0.0
+          with:
+            image: "gamezone:gamezone"
