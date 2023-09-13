@@ -14,7 +14,7 @@ public class MainController implements WebPageController {
     @Autowired
     private API api;
 
-    @GetMapping(value = "/page")
+    @GetMapping(value = "/")
     public String welcomePage(Model model) {
         model.addAttribute(Attributes.GAME_LIST, api.getGamesList());
 
