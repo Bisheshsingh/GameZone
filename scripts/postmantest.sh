@@ -1,3 +1,5 @@
+#!/bin/bash
+
 sleep 60
 echo PostMan Tests Started
 postman collection run "28989418-3a3c5990-6a0a-41d6-a601-6cfad04ac644" --integration-id "148257-${{ github.run_id }}"
