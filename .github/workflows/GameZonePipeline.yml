@@ -44,15 +44,15 @@ jobs:
       - name: Install Postman CLI
         run: |
           curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+          
+      - name: Login To Postman CLI
+        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
 
       - name: Download The Jar
         uses: actions/download-artifact@v2.1.1
         with:
           name: GameZone-${{ github.sha }}
           path: ./build/libs/GameZone-${{ github.sha }}.jar
-          
-      - name: Login To Postman CLI
-        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
 
       - name: Deploying The Application
         run: (java -jar build/libs/GameZone-0.0.1-SNAPSHOT.jar) 
