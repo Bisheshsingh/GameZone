@@ -23,13 +23,10 @@ jobs:
        - name: Run Gradle Build
          run: gradle build
 
-       - name: Create Jar
-         run: gradle bootJar
-
        - name: Create DIR for Artifacts
          run: mkdir Artifacts &&
               mv Dockerfile Artifacts &&
-              mv build/libs/GameZone-0.0.1-SNAPSHOT Artifacts
+              mv build/libs/GameZone-0.0.1-SNAPSHOT.jar Artifacts
          
        - name: Upload The Artifacts
          uses: actions/upload-artifact@v3.1.3
