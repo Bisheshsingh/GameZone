@@ -23,42 +23,65 @@ jobs:
        - name: Run Gradle Build
          run: gradle build
 
-       - name: Rename the Jar
-         run: cp build/libs/GameZone-0.0.1-SNAPSHOT.jar GameZone-${{ github.sha }}.jar
+  Beta:
+    needs: Build 
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install Postman CLI
+        run: |
+          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+          
+      - name: Login to Postman CLI
+        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
+        
+      - name: Getting Project
+        uses: actions/checkout@v4.0.0
 
-       - name: Save the jar
-         uses: actions/upload-artifact@v3.1.3
-         with:
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3.12.0
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Create Jar
+        run: gradle bootJar
+
+      - name: Running The Application
+        run: (java -jar build/libs/GameZone-0.0.1-SNAPSHOT.jar) 
+             & (sleep 120 ;
+                  echo PostMan Tests Started ;
+                  postman collection run "28989418-3a3c5990-6a0a-41d6-a601-6cfad04ac644" --integration-id "148257-${{ github.run_id }}" ; 
+                  postman api lint 440cb951-f437-470a-8085-3e0e90a57263 --integration-id 148257 ;
+                  echo Tests Completed ; exit $?)
+                  
+      - name: Rename the Jar
+        run: cp build/libs/GameZone-0.0.1-SNAPSHOT.jar GameZone-${{ github.sha }}.jar
+
+      - name: Save the jar
+        uses: actions/upload-artifact@v3.1.3
+        with:
            name: GameZone-${{ github.sha }}
            path: GameZone-${{ github.sha }}.jar
          
   Packaging:
-    needs: Build 
+    needs: Beta
     runs-on: ubuntu-latest
     steps:
         - name: Download a Build Artifact
           uses: actions/download-artifact@v2.1.1
           with:
            name: GameZone-${{ github.sha }}
-           path: GameZone-${{ github.sha }}.jar
-
-        - name: Create Dockerfile
-          run: echo -e "FROM openjdk:latest\n
-                     VOLUME /tmp \n
-                     COPY *.jar app.jar \n
-                     EXPOSE 8080 \n 
-                     ENTRYPOINT ["java","-jar","/app.jar"]" | tee Dockerfile
-
-        - name: Print
-          run: cat Dockerfile
+           path: ./build/libs/GameZone-${{ github.sha }}.jar
       
         - name: Setup Docker
           uses: docker/setup-qemu-action@v2.2.0
           
         - name: Create an Image
-          run: docker build -t gamezone:gamezone .
+          run: docker build -t gamezone-${{ github.sha }}:gamezone .
 
         - name: Save Image
           uses: ishworkh/container-image-artifact-upload@v1.0.0
           with:
-            image: "gamezone:gamezone"
+            image: gamezone-${{ github.sha }}:gamezone
