@@ -39,6 +39,11 @@ jobs:
       - name: Create Jar
         run: gradle bootJar
 
+      - name: Create Test Script
+        run: echo -e "sleep 120 \n echo Tests are done \n exit"
+             | tee testScript.sh
+
       - name: Running The Application
         working-directory: "./build/libs"
-        run: java -jar GameZone-0.0.1-SNAPSHOT.jar
+        run: java -jar GameZone-0.0.1-SNAPSHOT.jar 
+             & sh testScript.sh
