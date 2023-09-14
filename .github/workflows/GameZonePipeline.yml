@@ -48,6 +48,12 @@ jobs:
       - name: Login To Postman CLI
         run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
 
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3.12.0
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
       - name: Download The Jar
         uses: actions/download-artifact@v2.1.1
         with:
