@@ -27,8 +27,8 @@ jobs:
          run: gradle bootJar
 
        - name: Create DIR for Artifacts
-         run: mkdir Artifacts ;
-              mv Dockerfile Artifacts
+         run: mkdir Artifacts &&
+              mv Dockerfile Artifacts &&
               mv build/libs/GameZone-0.0.1-SNAPSHOT Artifacts
          
        - name: Upload The Artifacts
