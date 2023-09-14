@@ -63,6 +63,13 @@ jobs:
                   exit 1 \n
               fi" | tee postmantest.sh
 
+      - name: Printing
+        run: |
+             cat postmantest.sh
+             ls
+             cd ./build/libs
+             ls
+
       - name: Running The Application
-        run: (java -jar ./build/libs/GameZone-0.0.1-SNAPSHOT.jar) 
-             & (sh ./scripts/postmantest.sh)
+        run: (java -jar build/libs/GameZone-0.0.1-SNAPSHOT.jar) 
+             & (sh postmantest.sh)
