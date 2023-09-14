@@ -40,8 +40,10 @@ jobs:
         run: gradle bootJar
 
       - name: Create Test Script
-        run: echo -e "sleep 120 \n echo Tests are done \n exit"
-             | tee testScript.sh
+        working-directory: "./build/libs"
+        run: echo -e "sleep 120 \n 
+             echo Tests are done \n
+             exit" | tee testScript.sh
 
       - name: Running The Application
         working-directory: "./build/libs"
