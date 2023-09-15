@@ -7,6 +7,8 @@ import com.example.games.Models.Coordinate2D;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class TicTacToeApiImpl implements TicTacToeApi {
     @Autowired
@@ -34,5 +36,10 @@ public class TicTacToeApiImpl implements TicTacToeApi {
     public TicTacToePlayer getPlayer(final TicTacToePlayerType type, final String name,
                                      final Enums.TicTacToeCharacters character) {
         return playerFactory.getPlayer(type, name, character);
+    }
+
+    @Override
+    public TicTacToePlayerManager getPlayerManager(final List<TicTacToePlayer> players) {
+        return new TicTacToePlayerManager(players);
     }
 }

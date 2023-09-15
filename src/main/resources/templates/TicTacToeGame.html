@@ -18,23 +18,34 @@
 </head>
 
 <body>
-<div id="board" class="board">
-    <div class="rowCarrier" th:each="currentRow:${board.rawBoard}">
-        <div align="center" th:each="currentElement:${currentRow}">
-            <a th:class="${#strings.equals(currentElement.value.character,
+<div id="game" class="game">
+    <h1 th:class="${playerManager.getPlayer(0).getName()
+                                .equals(playerManager.currentPlayer().getName())}
+                                ? player1C : player1"
+        th:text="${playerManager.getPlayer(0).name}"></h1>
+
+    <div id="board" class="board">
+        <div class="rowCarrier" th:each="currentRow:${board.rawBoard}">
+            <div align="center" th:each="currentElement:${currentRow}">
+                <a th:class="${#strings.equals(currentElement.value.character,
                                           defaultCharacter.character)} ? neonBlock : neonBlockD"
-               th:hx-get="'/tictactoe/updateBoard/'
+                   th:hx-get="'/tictactoe/updateBoard/'
                + ${currentRowStat.index} + '/'
                + ${currentElementStat.index}"
-               hx-swap="outerHTML"
-               hx-target="#board">
-                <p class="blockText"
-                   th:text="${currentElement.value.character}"></p>
-            </a>
+                   hx-swap="outerHTML"
+                   hx-target="#game">
+                    <p class="blockText"
+                       th:text="${currentElement.value.character}"></p>
+                </a>
+            </div>
         </div>
     </div>
-</div>
 
+    <h1 th:class="${playerManager.getPlayer(1).getName()
+                                .equals(playerManager.currentPlayer().getName())}
+                                ? player2C : player2"
+        th:text="${playerManager.getPlayer(1).name}"></h1>
+</div>
 </body>
 
 <!-- JS -->

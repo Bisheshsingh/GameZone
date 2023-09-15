@@ -2,7 +2,8 @@ package com.example.games.LLD.TicTacToe.Models;
 
 import com.example.games.LLD.TicTacToe.Constants.Enums;
 import com.example.games.LLD.TicTacToe.Constants.Enums.TicTacToePlayerType;
-import com.example.games.Models.Coordinate2D;
+
+import java.util.List;
 
 public interface TicTacToeApi {
     TicTacToeBoard getEmptyBoard();
@@ -11,4 +12,6 @@ public interface TicTacToeApi {
                   TicTacToeBoard board);
     TicTacToePlayer getPlayer(TicTacToePlayerType type, String name,
                               Enums.TicTacToeCharacters character);
+
+    TicTacToePlayerManager getPlayerManager(List<TicTacToePlayer> players);
 }
