@@ -9,11 +9,13 @@
     text-decoration: none;
     font-size: 2em;
     overflow: hidden;
+    transition: all 0.5s ease;
 }
 
 .neonButton:hover,.neonBlock:hover {
     color: darkviolet;
     background: #39ff14;
+    scale: 120%;
     box-shadow: 0 0 50px #39ff14;
 }
 
@@ -23,8 +25,9 @@
 }
 
 .board {
-    margin-left: 40%;
-    margin-top: 10%;
+    align-self: center;
+    margin-top: 8%;
+    margin-left: 20%;
 }
 
 .neonBlock {
@@ -45,4 +48,44 @@
 .blockText {
     font-size: 3em;
     margin-top: -30px;
+}
+
+.player1, .player2 {
+    scale: 150%;
+    margin-left: 5%;
+    margin-top: 15%;
+    color: grey;
+    align-self: baseline;
+}
+
+.player1C, .player2C {
+    scale: 180%;
+    margin-left: 5%;
+    margin-top: 15%;
+    color: #fff;
+    text-shadow:
+            0 0 4px #fff,
+            0 0 10px #fff,
+            0 0 18px #fff,
+            0 0 38px #f09,
+            0 0 73px #f09,
+            0 0 80px #f09,
+            0 0 94px #f09,
+            0 0 140px #f09;
+    align-self: baseline;
+}
+
+.player2 {
+    margin-left: 20%;
+}
+
+.player2C {
+    margin-left: 20%;
+}
+
+.game {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
 }

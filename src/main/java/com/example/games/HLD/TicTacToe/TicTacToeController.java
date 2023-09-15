@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @Controller
 @SessionAttributes({
         TicTacToeAttributes.BOARD,
+        TicTacToeAttributes.PLAYER_MANAGER,
         TicTacToeAttributes.DEFAULT_CHARACTER})
 public class TicTacToeController implements WebPageController {
     @Override
