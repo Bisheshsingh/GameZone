@@ -25,21 +25,23 @@ public class TicTacToeApiImpl implements TicTacToeApi {
     }
 
     @Override
-    public void makeMove(final Integer x, final Integer y, final Enums.TicTacToeCharacters character,
-                         final TicTacToeBoard board) {
-        final TicTacToeMove move = new TicTacToeMove(new Coordinate2D(x,y) , character);
-
+    public void makeMove(final Integer x, final Integer y,
+                         final TicTacToeBoard board,
+                         final TicTacToePlayerManager playerManager) {
+        final TicTacToeMove move = new TicTacToeMove(new Coordinate2D(x, y),
+                playerManager.currentPlayer().getCharacter());
+        playerManager.nextPlayer();
         board.applyMove(move);
     }
 
     @Override
-    public TicTacToePlayer getPlayer(final TicTacToePlayerType type, final String name,
-                                     final Enums.TicTacToeCharacters character) {
-        return playerFactory.getPlayer(type, name, character);
-    }
+    public TicTacToePlayerManager getPlayerManager(final TicTacToePlayerType playerType1,
+                                                   final TicTacToePlayerType playerType2) {
+        final TicTacToePlayer player1 = playerFactory.getPlayer(playerType1,
+                Enums.TicTacToePlayerNames.DEFAULT_PLAYER_1, Enums.TicTacToeCharacters.X);
+        final TicTacToePlayer player2 = playerFactory.getPlayer(playerType2,
+                Enums.TicTacToePlayerNames.DEFAULT_PLAYER_2, Enums.TicTacToeCharacters.O);
 
-    @Override
-    public TicTacToePlayerManager getPlayerManager(final List<TicTacToePlayer> players) {
-        return new TicTacToePlayerManager(players);
+        return new TicTacToePlayerManager(List.of(player1, player2));
     }
 }

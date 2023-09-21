@@ -19,32 +19,45 @@
 
 <body>
 <div id="game" class="game">
-    <h1 th:class="${playerManager.getPlayer(0).getName()
-                                .equals(playerManager.currentPlayer().getName())}
+    <h1 th:class="${request.playerManager.getPlayer(0).getName()
+                                .equals(request.playerManager.currentPlayer().getName())}
                                 ? player1C : player1"
-        th:text="${playerManager.getPlayer(0).name}"></h1>
+        th:text="${request.playerManager.getPlayer(0).name}"></h1>
 
     <div id="board" class="board">
-        <div class="rowCarrier" th:each="currentRow:${board.rawBoard}">
+        <div class="rowCarrier" th:each="currentRow:${request.board.rawBoard}">
             <div align="center" th:each="currentElement:${currentRow}">
-                <a th:class="${#strings.equals(currentElement.value.character,
-                                          defaultCharacter.character)} ? neonBlock : neonBlockD"
-                   th:hx-get="'/tictactoe/updateBoard/'
-               + ${currentRowStat.index} + '/'
-               + ${currentElementStat.index}"
-                   hx-swap="outerHTML"
-                   hx-target="#game">
-                    <p class="blockText"
-                       th:text="${currentElement.value.character}"></p>
-                </a>
+                <form th:hx-get="@{/tictactoe/updateBoard}"
+                      hx-swap="outerHTML"
+                      hx-target="#game"
+                      th:object="${response}">
+                    <input name="board"
+                           th:value="${request.objectParser.toJson(request.board)}"
+                           hidden>
+                    <input name="playerManager"
+                           th:value="${request.objectParser.toJson(request.playerManager)}"
+                           hidden>
+                    <input name="x"
+                           th:value="${currentRowStat.index}"
+                           hidden>
+                    <input name="y"
+                           th:value="${currentElementStat.index}"
+                           hidden>
+                    <button th:class="${#strings.equals(currentElement.value.character,
+                                          request.defaultCharacter.character)} ? neonBlock : neonBlockD"
+                            type="submit">
+                        <p class="blockText"
+                           th:text="${currentElement.value.character}"></p>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
 
-    <h1 th:class="${playerManager.getPlayer(1).getName()
-                                .equals(playerManager.currentPlayer().getName())}
+    <h1 th:class="${request.playerManager.getPlayer(1).getName()
+                                .equals(request.playerManager.currentPlayer().getName())}
                                 ? player2C : player2"
-        th:text="${playerManager.getPlayer(1).name}"></h1>
+        th:text="${request.playerManager.getPlayer(1).name}"></h1>
 </div>
 </body>
 

@@ -14,8 +14,8 @@ public class TicTacToePlayerFactoryImpl implements TicTacToePlayerFactory {
 
     @Override
     public TicTacToePlayer getPlayer(final Enums.TicTacToePlayerType type,
-                                     final String name, final Enums.TicTacToeCharacters character) {
-        if(type.equals(HUMAN_PLAYER)) {
+                                     final Enums.TicTacToePlayerNames name, final Enums.TicTacToeCharacters character) {
+        if (type.equals(HUMAN_PLAYER)) {
             return new TicTacToeHumanPlayer(
                     String.valueOf(RandomUtil.getPositiveInt()),
                     name, character

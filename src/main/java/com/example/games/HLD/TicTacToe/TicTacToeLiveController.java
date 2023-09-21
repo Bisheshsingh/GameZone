@@ -1,64 +1,55 @@
 package com.example.games.HLD.TicTacToe;
 
 import com.example.games.Constants.Constant;
-import com.example.games.LLD.TicTacToe.Constants.Enums;
 import com.example.games.LLD.TicTacToe.Constants.Enums.TicTacToeCharacters;
-import com.example.games.LLD.TicTacToe.Constants.TicTacToeAttributes;
-import com.example.games.LLD.TicTacToe.Models.TicTacToeApi;
-import com.example.games.LLD.TicTacToe.Models.TicTacToeBoard;
-import com.example.games.LLD.TicTacToe.Models.TicTacToePlayer;
-import com.example.games.LLD.TicTacToe.Models.TicTacToePlayerManager;
+import com.example.games.LLD.TicTacToe.Models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
+import static com.example.games.LLD.TicTacToe.Constants.Enums.TicTacToePlayerType.*;
 
 @Controller
-@SessionAttributes({
-        TicTacToeAttributes.BOARD,
-        TicTacToeAttributes.PLAYER_MANAGER,
-        TicTacToeAttributes.DEFAULT_CHARACTER})
 public class TicTacToeLiveController {
     @Autowired
     private TicTacToeApi api;
 
     @GetMapping(value = "/tictactoe/vsplayer")
-    public String vsPlayer(Model model) {
-        model.addAttribute(TicTacToeAttributes.BOARD, api.getEmptyBoard());
-        model.addAttribute(TicTacToeAttributes.DEFAULT_CHARACTER,
-                TicTacToeCharacters.DEFAULT_CHAR);
+    public String vsPlayer(final RedirectAttributes redirectAttributes) {
+        final FrontEndRequest request = FrontEndRequest.builder()
+                .defaultCharacter(TicTacToeCharacters.DEFAULT_CHAR)
+                .board(api.getEmptyBoard())
+                .playerManager(api.getPlayerManager(HUMAN_PLAYER, HUMAN_PLAYER))
+                .objectParser(Attributes.OBJECT_PARSER)
+                .build();
+        final FrontEndResponse response = FrontEndResponse.builder().build();
 
-        final TicTacToePlayer player1 = api.getPlayer(
-                Enums.TicTacToePlayerType.HUMAN_PLAYER,
-                TicTacToeAttributes.DEFAULT_PLAYER_1,
-                TicTacToeCharacters.X);
-        final TicTacToePlayer player2 = api.getPlayer(
-                Enums.TicTacToePlayerType.HUMAN_PLAYER,
-                TicTacToeAttributes.DEFAULT_PLAYER_2,
-                TicTacToeCharacters.O);
-        final TicTacToePlayerManager playerManager = api.getPlayerManager(
-               List.of(player1, player2)
-        );
-
-        model.addAttribute(TicTacToeAttributes.PLAYER_MANAGER, playerManager);
+        redirectAttributes.addFlashAttribute(Attributes.REQUEST_KEY, request);
+        redirectAttributes.addFlashAttribute(Attributes.RESPONSE_KEY, response);
 
         return "redirect:" + Constant.PageInfos.TIC_TAC_TOE_GAME.getPageLink();
     }
 
-    @GetMapping(value = "/tictactoe/updateBoard/{x}/{y}")
-    public String updateBoard(@SessionAttribute(TicTacToeAttributes.BOARD) final TicTacToeBoard board,
-                              @SessionAttribute(TicTacToeAttributes.PLAYER_MANAGER) final TicTacToePlayerManager playerManager,
-                              @PathVariable(TicTacToeAttributes.X) Integer x,
-                              @PathVariable(TicTacToeAttributes.Y) Integer y, Model model) {
+    @GetMapping(value = "/tictactoe/updateBoard")
+    public String updateBoard(@ModelAttribute(Attributes.RESPONSE_KEY) final FrontEndResponse response,
+                              final RedirectAttributes redirectAttributes) {
+        final TicTacToePlayerManager playerManager = Attributes.OBJECT_PARSER.fromJson(
+                response.getPlayerManager(), TicTacToePlayerManager.class);
+        final TicTacToeBoard board = Attributes.OBJECT_PARSER.fromJson(
+                response.getBoard(), TicTacToeBoard.class);
 
-        final TicTacToePlayer player = playerManager.currentPlayer();
-        api.makeMove(x, y, player.getCharacter(), board);
-        playerManager.nextPlayer();
+        api.makeMove(response.getX(), response.getY(), board, playerManager);
+
+        final FrontEndRequest request = FrontEndRequest.builder()
+                .defaultCharacter(TicTacToeCharacters.DEFAULT_CHAR)
+                .board(board)
+                .playerManager(playerManager)
+                .objectParser(Attributes.OBJECT_PARSER)
+                .build();
+
+        redirectAttributes.addFlashAttribute(Attributes.REQUEST_KEY, request);
+        redirectAttributes.addFlashAttribute(Attributes.RESPONSE_KEY, response);
 
         return "redirect:" + Constant.PageInfos.TIC_TAC_TOE_GAME.getPageLink();
     }

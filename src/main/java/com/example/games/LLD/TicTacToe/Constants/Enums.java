@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 public class Enums {
-    public enum TicTacToePlayerType{
+    public enum TicTacToePlayerType {
         HUMAN_PLAYER;
     }
 
@@ -18,6 +18,18 @@ public class Enums {
 
         TicTacToeCharacters(final Character character) {
             this.character = character;
+        }
+    }
+
+    @Getter
+    @ToString
+    public enum TicTacToePlayerNames {
+        DEFAULT_PLAYER_1("Player 1"), DEFAULT_PLAYER_2("Player2");
+
+        private final String name;
+
+        TicTacToePlayerNames(final String name) {
+            this.name = name;
         }
     }
 }

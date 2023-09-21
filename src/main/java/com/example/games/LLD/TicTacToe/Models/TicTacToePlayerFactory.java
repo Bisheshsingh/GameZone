@@ -4,5 +4,5 @@ import com.example.games.LLD.TicTacToe.Constants.Enums;
 
 public interface TicTacToePlayerFactory {
     TicTacToePlayer getPlayer(Enums.TicTacToePlayerType type,
-                              String name, Enums.TicTacToeCharacters character);
+                              Enums.TicTacToePlayerNames name, Enums.TicTacToeCharacters character);
 }
