@@ -1,17 +1,17 @@
-package com.example.games.LLD.TicTacToe.Models;
+package com.example.games.LLD.TicTacToe.Activity;
 
 import com.example.games.LLD.TicTacToe.Constants.Enums;
+import com.example.games.LLD.TicTacToe.Models.TicTacToeCell;
+import com.example.games.LLD.TicTacToe.Models.TicTacToeMove;
 import com.example.games.Models.Board2D;
-import com.example.games.Models.Coordinate2D;
 import lombok.Getter;
 import lombok.Setter;
 
 import static com.example.games.LLD.TicTacToe.Constants.Enums.TicTacToeCharacters.DEFAULT_CHAR;
-import static com.example.games.LLD.TicTacToe.Constants.Enums.TicTacToeCharacters;
 
 @Getter
 @Setter
-public class TicTacToeBoard extends Board2D<TicTacToeCharacters, TicTacToeCell, TicTacToeMove> {
+public class TicTacToeBoard extends Board2D<TicTacToeCell, TicTacToeMove> {
     private static final Integer DEFAULT_ROWS = 3;
     private static final Integer DEFAULT_COLUMNS = 3;
 

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TicTacToeGame</title>
+
+    <!--CSS-->
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+        }
+    </style>
+    <link th:href="@{/CSS/TicTacToe/TicTacToe.css}" rel="stylesheet">
+    <link th:href="@{/webjars/bootstrap/5.3.1/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<div id="canvas-wrap">
+    <div class="game-over-card">
+        <div class="game-over-container">
+            <div class="game-over">Game Over</div>
+            <div class="winner-name" th:text="${winner}+' Wins!'"></div>
+            <a class="specialButton play-again"
+                    onclick="location.reload()">Play Again</a>
+            <a class="specialButton go-menu"
+               th:href="@{/}">Go to Menu</a>
+        </div>
+    </div>
+    <canvas id="fireworksCanvas"></canvas>
+</div>
+</body>
+
+<script th:inline="javascript" th:src="@{/Script/TicTacToe/fireworks.js}" type="text/javascript"></script>
+<script th:src="@{/webjars/bootstrap/5.3.1/js/bootstrap.bundle.min.js}" defer></script>
+<script th:src="@{/webjars/htmx.org/1.9.4/dist/htmx.min.js}" defer></script>
+
+</html>

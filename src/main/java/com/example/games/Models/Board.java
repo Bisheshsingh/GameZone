@@ -1,5 +1,5 @@
 package com.example.games.Models;
 
-public interface Board <T extends Move> {
-    void applyMove(T move);
+public interface Board <U extends Cell<?>, V extends Move> {
+    void applyMove(V move);
 }

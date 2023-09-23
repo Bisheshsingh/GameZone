@@ -6,49 +6,75 @@
 
     <!--CSS-->
     <style th:inline="css">
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
         body {
             background-image: url([[@{/Others/TicTacToe/bg1.jpg}]]);
             background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
         }
     </style>
     <link th:href="@{/CSS/TicTacToe/TicTacToe.css}" rel="stylesheet">
     <link th:href="@{/webjars/bootstrap/5.3.1/css/bootstrap.min.css}" rel="stylesheet"/>
-    <script th:src="@{/webjars/bootstrap/5.3.1/js/bootstrap.bundle.min.js}" defer></script>
-    <script th:src="@{/webjars/htmx.org/1.9.4/dist/htmx.min.js}" defer></script>
 </head>
 
 <body>
 <div id="game" class="game">
-    <h1 th:class="${playerManager.getPlayer(0).getName()
-                                .equals(playerManager.currentPlayer().getName())}
+    <h1 th:class="${request.playerManager.getPlayer(0).getName()
+                                .equals(request.playerManager.currentPlayer().getName())}
                                 ? player1C : player1"
-        th:text="${playerManager.getPlayer(0).name}"></h1>
+        th:text="${request.playerManager.getPlayer(0).name}"></h1>
 
     <div id="board" class="board">
-        <div class="rowCarrier" th:each="currentRow:${board.rawBoard}">
+        <div class="rowCarrier" th:each="currentRow:${request.board.rawBoard}">
             <div align="center" th:each="currentElement:${currentRow}">
-                <a th:class="${#strings.equals(currentElement.value.character,
-                                          defaultCharacter.character)} ? neonBlock : neonBlockD"
-                   th:hx-get="'/tictactoe/updateBoard/'
-               + ${currentRowStat.index} + '/'
-               + ${currentElementStat.index}"
-                   hx-swap="outerHTML"
-                   hx-target="#game">
-                    <p class="blockText"
-                       th:text="${currentElement.value.character}"></p>
-                </a>
+                <form th:hx-get="@{/tictactoe/updateBoard}"
+                      hx-swap="outerHTML"
+                      hx-target="#game"
+                      th:object="${response}">
+                    <input name="board"
+                           th:value="${request.objectParser.toJson(request.board)}"
+                           hidden>
+                    <input name="playerManager"
+                           th:value="${request.objectParser.toJson(request.playerManager)}"
+                           hidden>
+                    <input name="x"
+                           th:value="${currentRowStat.index}"
+                           hidden>
+                    <input name="y"
+                           th:value="${currentElementStat.index}"
+                           hidden>
+                    <button th:class="${!request.gameStatus.isGameOver
+                                        && #strings.equals(currentElement.value.character,
+                                          request.defaultCharacter.character)} ? neonBlock : neonBlockD"
+                            type="submit">
+                        <p class="blockText"
+                           th:text="${currentElement.value.character}"></p>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
 
-    <h1 th:class="${playerManager.getPlayer(1).getName()
-                                .equals(playerManager.currentPlayer().getName())}
+    <h1 th:class="${request.playerManager.getPlayer(1).getName()
+                                .equals(request.playerManager.currentPlayer().getName())}
                                 ? player2C : player2"
-        th:text="${playerManager.getPlayer(1).name}"></h1>
+        th:text="${request.playerManager.getPlayer(1).name}"></h1>
 </div>
 </body>
 
 <!-- JS -->
 <script th:inline="javascript" th:src="@{/Script/TicTacToe/TicTacToe.js}" type="text/javascript"></script>
+<script th:src="@{/webjars/bootstrap/5.3.1/js/bootstrap.bundle.min.js}" defer></script>
+<script th:src="@{/webjars/htmx.org/1.9.4/dist/htmx.min.js}" defer></script>
 
 </html>
