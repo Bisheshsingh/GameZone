@@ -1,6 +1,5 @@
 package com.example.games.LLD.TicTacToe.Constants;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -24,7 +23,7 @@ public class Enums {
     @Getter
     @ToString
     public enum TicTacToePlayerNames {
-        DEFAULT_PLAYER_1("Player 1"), DEFAULT_PLAYER_2("Player2");
+        DEFAULT_PLAYER_1("Player 1"), DEFAULT_PLAYER_2("Player 2");
 
         private final String name;
 

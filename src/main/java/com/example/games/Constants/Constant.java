@@ -11,6 +11,9 @@ public final class Constant {
 
         public static final PageInfo TIC_TAC_TOE_GAME
                 = new PageInfo("TicTacToeGame", "/tictactoe/game");
+
+        public static final PageInfo TIC_TAC_TOE_GAME_OVER
+                = new PageInfo("TicTacToeGameOver", "/tictactoe/gameover");
     }
 
     public static final class ImagePaths {

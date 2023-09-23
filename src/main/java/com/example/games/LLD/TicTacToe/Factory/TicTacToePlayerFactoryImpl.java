@@ -2,9 +2,8 @@ package com.example.games.LLD.TicTacToe.Factory;
 
 import ch.qos.logback.core.testUtil.RandomUtil;
 import com.example.games.LLD.TicTacToe.Constants.Enums;
-import com.example.games.LLD.TicTacToe.Models.TicTacToeHumanPlayer;
+import com.example.games.LLD.TicTacToe.Activity.TicTacToeHumanPlayer;
 import com.example.games.LLD.TicTacToe.Models.TicTacToePlayer;
-import com.example.games.LLD.TicTacToe.Models.TicTacToePlayerFactory;
 import org.springframework.stereotype.Component;
 
 import static com.example.games.LLD.TicTacToe.Constants.Enums.TicTacToePlayerType.*;

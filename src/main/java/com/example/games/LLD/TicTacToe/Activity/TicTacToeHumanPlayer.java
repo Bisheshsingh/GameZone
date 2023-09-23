@@ -1,6 +1,7 @@
-package com.example.games.LLD.TicTacToe.Models;
+package com.example.games.LLD.TicTacToe.Activity;
 
 import com.example.games.LLD.TicTacToe.Constants.Enums;
+import com.example.games.LLD.TicTacToe.Models.TicTacToePlayer;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor

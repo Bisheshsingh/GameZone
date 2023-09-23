@@ -2,8 +2,10 @@ package com.example.games.LLD.TicTacToe.Activity;
 
 import com.example.games.LLD.TicTacToe.Constants.Enums;
 import com.example.games.LLD.TicTacToe.Constants.Enums.TicTacToePlayerType;
+import com.example.games.LLD.TicTacToe.Factory.TicTacToePlayerFactory;
 import com.example.games.LLD.TicTacToe.Models.*;
 import com.example.games.Models.Coordinate2D;
+import com.example.games.Models.GameStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +15,8 @@ import java.util.List;
 public class TicTacToeApiImpl implements TicTacToeApi {
     @Autowired
     private TicTacToePlayerFactory playerFactory;
+    @Autowired
+    private TicTacToeEvaluation evaluation;
 
     @Override
     public TicTacToeBoard getEmptyBoard() {
@@ -20,8 +24,9 @@ public class TicTacToeApiImpl implements TicTacToeApi {
     }
 
     @Override
-    public Boolean isGameOver(final TicTacToeBoard board) {
-        return Boolean.FALSE;
+    public GameStatus gameStatus(final TicTacToeBoard board,
+                                 final TicTacToePlayerManager playerManager) {
+        return evaluation.gameStatus(board, playerManager);
     }
 
     @Override
